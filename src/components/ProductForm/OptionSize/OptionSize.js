@@ -1,4 +1,5 @@
 import shortid from "shortid";
+import clsx from "clsx";
 import styles from './OptionSize.module.scss';
 import PropTypes from 'prop-types';
 
@@ -14,7 +15,7 @@ const OptionSize = ({sizes, currentSize, setCurrentSize}) => {
                 setCurrentSize(size.name);
               }}
               type="button"
-              className={size.name === currentSize && styles.active}
+              className={clsx(styles.choices, size.name === currentSize && styles.active)}
             >
               {size.name}
             </button>
