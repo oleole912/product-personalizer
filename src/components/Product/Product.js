@@ -8,7 +8,7 @@ const Product = ({id, name, title, basePrice, colors, sizes}) => {
   const [currentColor, setCurrentColor] = useState(colors[0]);
   const [currentSize, setCurrentSize] = useState(sizes[0].name);
 
-  const getPrice = useMemo(() => {
+  const price = useMemo(() => {
     const foundSize = sizes.find(size => size.name === currentSize);
     return basePrice + foundSize.additionalPrice;
   }, [currentSize, basePrice, sizes]);
@@ -18,7 +18,7 @@ const Product = ({id, name, title, basePrice, colors, sizes}) => {
     console.log('Summary');
     console.log('==============');
     console.log('Name: ', title);
-    console.log('Price: ', getPrice);
+    console.log('Price: ', price);
     console.log('Size: ', currentSize);
     console.log('Color: ', currentColor);
   }
@@ -29,7 +29,7 @@ const Product = ({id, name, title, basePrice, colors, sizes}) => {
       <div>
         <header>
           <h2 className={styles.name}>{title}</h2>
-          <span className={styles.price}>Price: {getPrice}$</span>
+          <span className={styles.price}>Price: {price}$</span>
         </header>
         <ProductForm sizes={sizes} colors={colors} submitHandler={submitHandler} currentSize={currentSize} currentColor={currentColor} setCurrentSize={setCurrentSize} setCurrentColor={setCurrentColor} />
       </div>
