@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import styles from './Product.module.scss';
 import PropTypes from 'prop-types';
 import ProductImage from '../ProductImage/ProductImage';
@@ -8,17 +8,17 @@ const Product = ({id, name, title, basePrice, colors, sizes}) => {
   const [currentColor, setCurrentColor] = useState(colors[0]);
   const [currentSize, setCurrentSize] = useState(sizes[0].name);
 
-  const getPrice = () => {
-    const foundSize = sizes.find(size => size.name === currentSize)
+  const getPrice = useMemo(() => {
+    const foundSize = sizes.find(size => size.name === currentSize);
     return basePrice + foundSize.additionalPrice;
-  }
+  }, [currentSize, basePrice, sizes]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     console.log('Summary');
     console.log('==============');
     console.log('Name: ', title);
-    console.log('Price: ', getPrice());
+    console.log('Price: ', getPrice);
     console.log('Size: ', currentSize);
     console.log('Color: ', currentColor);
   }
@@ -29,7 +29,7 @@ const Product = ({id, name, title, basePrice, colors, sizes}) => {
       <div>
         <header>
           <h2 className={styles.name}>{title}</h2>
-          <span className={styles.price}>Price: {getPrice()}$</span>
+          <span className={styles.price}>Price: {getPrice}$</span>
         </header>
         <ProductForm sizes={sizes} colors={colors} submitHandler={submitHandler} currentSize={currentSize} currentColor={currentColor} setCurrentSize={setCurrentSize} setCurrentColor={setCurrentColor} />
       </div>
